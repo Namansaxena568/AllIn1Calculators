@@ -1,22 +1,73 @@
-// src/components/Navbar.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const location = useLocation();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [displayText, setDisplayText] = useState('');
+  const fullText = 'AllIn1Calculator';
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const speed = isDeleting ? 100 : 150;
+    const pause = isDeleting ? 500 : 1000;
+
+    const typingEffect = setTimeout(() => {
+      if (!isDeleting && index < fullText.length) {
+        setDisplayText(fullText.slice(0, index + 1));
+        setIndex(index + 1);
+      } else if (!isDeleting && index === fullText.length) {
+        setTimeout(() => setIsDeleting(true), pause);
+      } else if (isDeleting && index > 0) {
+        setDisplayText(fullText.slice(0, index - 1));
+        setIndex(index - 1);
+      } else if (isDeleting && index === 0) {
+        setIsDeleting(false);
+      }
+    }, speed);
+
+    return () => clearTimeout(typingEffect);
+  }, [index, isDeleting]);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
     <header style={styles.navbar}>
       <div style={styles.navContent}>
         <div style={styles.logo}>
-          🧮 <span style={{ fontWeight: 'bold' }}>AllIn1Calculator</span>
+          🧮 <span style={styles.typingText}>{displayText}</span>
         </div>
-        <nav style={styles.navLinks}>
-          <CustomLink to="/" current={location.pathname === '/'}>Home</CustomLink>
-          <CustomLink to="/about" current={location.pathname === '/about'}>About Us</CustomLink>
-          <CustomLink to="/services" current={location.pathname === '/services'}>Services</CustomLink>
-          <CustomLink to="/contact" current={location.pathname === '/contact'}>Contact Us</CustomLink>
-        </nav>
+
+        {isMobile ? (
+          <>
+            <button style={styles.hamburger} onClick={toggleMenu}>
+              ☰
+            </button>
+            {menuOpen && (
+              <nav style={styles.mobileMenu}>
+                <CustomLink to="/" current={location.pathname === '/'}>Home</CustomLink>
+                <CustomLink to="/about" current={location.pathname === '/about'}>About Us</CustomLink>
+                <CustomLink to="/services" current={location.pathname === '/services'}>Services</CustomLink>
+                <CustomLink to="/contact" current={location.pathname === '/contact'}>Contact Us</CustomLink>
+              </nav>
+            )}
+          </>
+        ) : (
+          <nav style={styles.navLinks}>
+            <CustomLink to="/" current={location.pathname === '/'}>Home</CustomLink>
+            <CustomLink to="/about" current={location.pathname === '/about'}>About Us</CustomLink>
+            <CustomLink to="/services" current={location.pathname === '/services'}>Services</CustomLink>
+            <CustomLink to="/contact" current={location.pathname === '/contact'}>Contact Us</CustomLink>
+          </nav>
+        )}
       </div>
     </header>
   );
@@ -31,7 +82,7 @@ const CustomLink = ({ to, current, children }) => (
       fontWeight: current ? 'bold' : 'normal',
       fontSize: '1rem',
       transition: '0.3s',
-      paddingBottom: '2px',
+      paddingBottom: '4px',
     }}
   >
     {children}
@@ -57,7 +108,7 @@ const styles = {
   navContent: {
     width: '100%',
     maxWidth: '1200px',
-    padding: '0 40px',
+    padding: '0 24px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -68,11 +119,48 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '0.3rem',
+    fontWeight: 'bold',
+    fontFamily: 'monospace',
+  },
+  typingText: {
+    borderRight: '2px solid white',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    animation: 'blink 0.7s steps(1) infinite',
   },
   navLinks: {
     display: 'flex',
     gap: '24px',
   },
+  hamburger: {
+    fontSize: '1.5rem',
+    background: 'transparent',
+    border: 'none',
+    color: '#fff',
+    cursor: 'pointer',
+  },
+  mobileMenu: {
+    position: 'absolute',
+    top: '70px',
+    right: '24px',
+    background: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: '8px',
+    padding: '12px 16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+    zIndex: 1001,
+  },
 };
+
+// Inject blinking cursor animation
+const blinkStyle = document.createElement('style');
+blinkStyle.innerHTML = `
+@keyframes blink {
+  0%, 100% { border-color: transparent }
+  50% { border-color: white }
+}
+`;
+document.head.appendChild(blinkStyle);
 
 export default Navbar;

@@ -27,7 +27,7 @@ const RightAngledTriangleCalculator = () => {
   };
 
   return (
-    <div className="container">
+    <div className="triangle-container">
       <h2>Right-Angled Triangle Calculator</h2>
       <input
         type="number"
@@ -52,37 +52,60 @@ const RightAngledTriangleCalculator = () => {
       )}
 
       <style>{`
-        .container {
-          max-width: 450px;
-          margin: 40px auto;
-          padding: 20px;
-          border: 2px solid #ddd;
-          border-radius: 10px;
-          background-color: #f9f9f9;
-          font-family: Arial, sans-serif;
-          text-align: center;
-          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: 'Segoe UI', sans-serif;
+          background: linear-gradient(135deg, #9F44D3, #3C8CE7);
         }
+
+        .triangle-container {
+          max-width: 500px;
+          margin: 60px auto;
+          padding: 30px;
+          border-radius: 20px;
+          backdrop-filter: blur(10px);
+          background: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+          text-align: center;
+          color: #fff;
+        }
+
+        h2 {
+          margin-bottom: 25px;
+          font-size: 26px;
+          color: #fff;
+        }
+
         input {
           width: 80%;
-          padding: 10px;
+          padding: 12px;
           margin: 10px 0;
-          font-size: 16px;
-        }
-        button {
-          padding: 10px 20px;
-          background-color: teal;
-          color: white;
+          border-radius: 8px;
           border: none;
-          border-radius: 5px;
-          cursor: pointer;
           font-size: 16px;
+          outline: none;
         }
+
+        button {
+          padding: 12px 25px;
+          font-size: 16px;
+          border: none;
+          border-radius: 8px;
+          background-color: #00c6ff;
+          color: white;
+          cursor: pointer;
+          transition: background 0.3s ease;
+          margin-top: 10px;
+        }
+
         button:hover {
-          background-color: #006666;
+          background-color: #0072ff;
         }
+
         .result {
-          margin-top: 20px;
+          margin-top: 25px;
+          font-size: 18px;
         }
       `}</style>
     </div>

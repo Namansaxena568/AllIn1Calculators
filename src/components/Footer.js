@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for internal routing
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const styles = {
@@ -42,9 +42,8 @@ const Footer = () => {
     },
     socialIcons: {
       display: 'flex',
-      justifyContent: 'center',
       gap: '16px',
-      marginTop: '20px',
+      marginTop: '10px',
     },
     iconWrapper: {
       width: '30px',
@@ -61,6 +60,63 @@ const Footer = () => {
     },
     iconSVGHover: {
       fill: '#fff',
+    },
+    welcomeTextWrapper: {
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      maxWidth: '300px',
+      marginTop: '10px',
+    },
+    welcomeText: {
+      display: 'inline-block',
+      fontWeight: 'bold',
+      color: '#0ff',
+      fontSize: '16px',
+      borderRight: '2px solid #0ff',
+      animation: 'typing 4s steps(30, end) infinite, blink 8s step-end infinite alternate',
+    },
+    newsletterContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      marginTop: '40px',
+      padding: '20px',
+      borderTop: '1px solid #333',
+      width: '100%',
+      maxWidth: '500px',
+      marginInline: 'auto',
+    },
+    newsletterTitle: {
+      color: '#0ff',
+      marginBottom: '15px',
+      fontSize: '1.2rem',
+    },
+    newsletterForm: {
+      display: 'flex',
+      gap: '10px',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      width: '100%',
+    },
+    input: {
+      padding: '10px',
+      borderRadius: '8px',
+      border: '1px solid #555',
+      background: '#111',
+      color: '#fff',
+      width: '60%',
+      minWidth: '200px',
+      outline: 'none',
+    },
+    button: {
+      padding: '10px 20px',
+      borderRadius: '8px',
+      background: 'linear-gradient(90deg, #00f2fe, #4facfe)',
+      border: 'none',
+      color: '#000',
+      cursor: 'pointer',
+      fontWeight: 'bold',
+      transition: 'transform 0.3s',
     },
     copyright: {
       marginTop: '30px',
@@ -126,32 +182,82 @@ const Footer = () => {
         </div>
 
         <div style={styles.column}>
-          <div style={styles.title}>Follow Us</div>
-          <div style={styles.socialIcons}>
-            {icons.map((icon, index) => (
-              <a
-                key={index}
-                href={icon.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: 'none' }}
-                onMouseEnter={() => setHoveredIcon(index)}
-                onMouseLeave={() => setHoveredIcon(null)}
-              >
-                <div style={hoveredIcon === index ? { ...styles.iconWrapper, ...styles.iconHover } : styles.iconWrapper}>
-                  <svg height="24" width="24" viewBox="0 0 24 24" style={hoveredIcon === index ? { ...styles.iconSVG, ...styles.iconSVGHover } : styles.iconSVG}>
-                    <path d={icon.svgPath} />
-                  </svg>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+              <div>
+                <div style={styles.title}>Follow Us</div>
+                <div style={styles.socialIcons}>
+                  {icons.map((icon, index) => (
+                    <a
+                      key={index}
+                      href={icon.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ textDecoration: 'none' }}
+                      onMouseEnter={() => setHoveredIcon(index)}
+                      onMouseLeave={() => setHoveredIcon(null)}
+                    >
+                      <div style={hoveredIcon === index ? { ...styles.iconWrapper, ...styles.iconHover } : styles.iconWrapper}>
+                        <svg height="24" width="24" viewBox="0 0 24 24" style={hoveredIcon === index ? { ...styles.iconSVG, ...styles.iconSVGHover } : styles.iconSVG}>
+                          <path d={icon.svgPath} />
+                        </svg>
+                      </div>
+                    </a>
+                  ))}
                 </div>
-              </a>
-            ))}
+              </div>
+
+              {/* 🔤 Animated Text */}
+              <div style={styles.welcomeTextWrapper}>
+                <span className="typewriter-text" style={styles.welcomeText}>
+                  Welcome to AllIn1Calculator
+                </span>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
+
+      {/* Newsletter */}
+      <div style={styles.newsletterContainer}>
+        <h3 style={styles.newsletterTitle}>Subscribe to Our Newsletter</h3>
+        <div style={styles.newsletterForm}>
+          <input type="email" placeholder="Enter your email" style={styles.input} />
+          <button
+            style={styles.button}
+            onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
+            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
+            onClick={() => alert('Thank you for subscribing!')}
+          >
+            Subscribe
+          </button>
         </div>
       </div>
 
       <div style={styles.copyright}>
         © {new Date().getFullYear()} CalcZone. All rights reserved. This is created with ❤️ by Naman Saxena.
       </div>
+
+      {/* 🔤 Keyframe styles */}
+      <style>
+        {`
+          @keyframes typing {
+            0% { width: 0 }
+            50% { width: 100% }
+            100% { width: 0 }
+          }
+
+          @keyframes blink {
+            0%, 100% { border-color: transparent }
+            50% { border-color: #0ff }
+          }
+
+          .typewriter-text {
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        `}
+      </style>
     </footer>
   );
 };

@@ -52,11 +52,10 @@ const MainHome = () => {
 
   return (
     <div>
-      {/* Main Content */}
       <div style={styles.container}>
         <h1 style={styles.heading}>All In One Calculator</h1>
 
-        <div style={styles.grid}>
+        <div className="grid-container">
           {categories.map((item, idx) => (
             <motion.div
               key={idx}
@@ -65,6 +64,7 @@ const MainHome = () => {
               whileHover="hover"
               whileTap="tap"
               onClick={() => navigate(item.path)}
+              className="card"
               style={{
                 ...styles.card,
                 border: `2px solid ${item.color}`,
@@ -100,10 +100,37 @@ const MainHome = () => {
           color: #ccc;
         }
 
+        .grid-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 24px;
+        }
+
+        .card {
+          min-width: 0;
+          padding: 20px 25px;
+          border-radius: 18px;
+          cursor: pointer;
+          color: #fff;
+          transition: all 0.3s ease;
+          user-select: none;
+          text-align: left;
+          backdrop-filter: blur(6px);
+        }
+
         @media (max-width: 768px) {
+          .grid-container {
+            grid-template-columns: 1fr;
+          }
           .card {
-            min-width: 100% !important;
             padding: 16px !important;
+            margin: 0 auto;
+          }
+        }
+
+        @media (max-width: 480px) {
+          h1 {
+            font-size: 1.8rem !important;
           }
         }
       `}</style>
@@ -130,22 +157,8 @@ const styles = {
     fontWeight: 'bold',
     textShadow: '1px 1px 8px rgba(0,0,0,0.6)',
   },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: 24,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-  },
   card: {
-    padding: '20px 25px',
-    borderRadius: '18px',
-    cursor: 'pointer',
-    color: '#fff',
-    transition: 'all 0.3s ease',
-    userSelect: 'none',
-    textAlign: 'left',
-    backdropFilter: 'blur(6px)',
+    // Base styles handled in CSS class
   },
   title: {
     fontSize: 18,
@@ -153,7 +166,7 @@ const styles = {
     marginBottom: 8,
   },
   desc: {
-    fontSize: 15, // Increased font size slightly
+    fontSize: 15,
     color: '#ddd',
   },
 };

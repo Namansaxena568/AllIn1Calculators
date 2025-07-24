@@ -24,7 +24,7 @@ const ConeCalculator = () => {
   };
 
   return (
-    <div className="container">
+    <div className="calculator-container">
       <h2>Cone Calculator</h2>
       <input
         type="number"
@@ -48,40 +48,63 @@ const ConeCalculator = () => {
       )}
 
       <style>{`
-        .container {
-          max-width: 480px;
-          margin: 40px auto;
-          padding: 20px;
-          border: 2px solid #ccc;
-          border-radius: 12px;
-          background-color: #e8f4fc;
-          font-family: Arial, sans-serif;
-          text-align: center;
-          box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        body {
+          margin: 0;
+          padding: 0;
+          background: linear-gradient(135deg, #1e3c72, #2a5298);
+          font-family: 'Segoe UI', sans-serif;
         }
+
+        .calculator-container {
+          max-width: 450px;
+          margin: 50px auto;
+          padding: 30px;
+          border-radius: 20px;
+          background: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          color: white;
+          text-align: center;
+        }
+
+        h2 {
+          margin-bottom: 25px;
+          font-size: 28px;
+        }
+
         input {
           width: 80%;
-          padding: 10px;
-          margin: 10px 0;
+          padding: 12px;
           font-size: 16px;
-          border-radius: 6px;
-          border: 1px solid #aaa;
-        }
-        button {
-          padding: 10px 20px;
-          background-color: #0074cc;
-          color: white;
           border: none;
-          border-radius: 5px;
+          border-radius: 10px;
+          margin-bottom: 20px;
+          outline: none;
+        }
+
+        button {
+          padding: 12px 25px;
+          background-color: #00c9ff;
+          border: none;
+          color: #fff;
           font-size: 16px;
+          border-radius: 10px;
           cursor: pointer;
+          transition: background 0.3s ease;
         }
+
         button:hover {
-          background-color: #005fa3;
+          background-color: #007acc;
         }
+
         .result {
-          margin-top: 20px;
-          font-size: 17px;
+          margin-top: 25px;
+          font-size: 18px;
+        }
+
+        .result p {
+          margin: 8px 0;
         }
       `}</style>
     </div>

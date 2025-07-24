@@ -7,11 +7,12 @@ const CircleCalculator = () => {
 
   const calculate = () => {
     const r = parseFloat(radius);
-    if (!isNaN(r)) {
-      const a = Math.PI * r * r;
-      const c = 2 * Math.PI * r;
-      setArea(a.toFixed(2));
-      setCircumference(c.toFixed(2));
+    if (!isNaN(r) && r > 0) {
+      const areaResult = Math.PI * r * r;
+      const circumferenceResult = 2 * Math.PI * r;
+
+      setArea(areaResult.toFixed(2));
+      setCircumference(circumferenceResult.toFixed(2));
     } else {
       setArea(null);
       setCircumference(null);
@@ -19,64 +20,85 @@ const CircleCalculator = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>Circle Calculator</h2>
+    <div className="calculator-container">
+      <h2>Circle Calculator</h2>
       <input
         type="number"
         placeholder="Enter radius"
         value={radius}
         onChange={(e) => setRadius(e.target.value)}
-        style={styles.input}
       />
-      <button onClick={calculate} style={styles.button}>
-        Calculate
-      </button>
+      <button onClick={calculate}>Calculate</button>
 
-      {area && circumference && (
-        <div style={styles.result}>
-          <p><strong>Area:</strong> {area} unit²</p>
+      {area && (
+        <div className="result">
+          <p><strong>Area:</strong> {area} square units</p>
           <p><strong>Circumference:</strong> {circumference} units</p>
         </div>
       )}
+
+      <style>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background: linear-gradient(135deg, #1e3c72, #2a5298);
+          font-family: 'Segoe UI', sans-serif;
+        }
+
+        .calculator-container {
+          max-width: 450px;
+          margin: 50px auto;
+          padding: 30px;
+          border-radius: 20px;
+          background: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          color: white;
+          text-align: center;
+        }
+
+        h2 {
+          margin-bottom: 25px;
+          font-size: 28px;
+        }
+
+        input {
+          width: 80%;
+          padding: 12px;
+          font-size: 16px;
+          border: none;
+          border-radius: 10px;
+          margin-bottom: 20px;
+          outline: none;
+        }
+
+        button {
+          padding: 12px 25px;
+          background-color: #00c9ff;
+          border: none;
+          color: #fff;
+          font-size: 16px;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: background 0.3s ease;
+        }
+
+        button:hover {
+          background-color: #007acc;
+        }
+
+        .result {
+          margin-top: 25px;
+          font-size: 18px;
+        }
+
+        .result p {
+          margin: 8px 0;
+        }
+      `}</style>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    maxWidth: '400px',
-    margin: '50px auto',
-    padding: '20px',
-    border: '2px solid #ddd',
-    borderRadius: '10px',
-    textAlign: 'center',
-    background: '#f9f9f9',
-    fontFamily: 'Arial',
-  },
-  heading: {
-    marginBottom: '20px',
-    color: '#333',
-  },
-  input: {
-    width: '80%',
-    padding: '10px',
-    marginBottom: '15px',
-    borderRadius: '5px',
-    border: '1px solid #ccc',
-    fontSize: '16px',
-  },
-  button: {
-    padding: '10px 20px',
-    backgroundColor: '#0077cc',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-  result: {
-    marginTop: '20px',
-    color: '#333',
-  },
 };
 
 export default CircleCalculator;

@@ -1,120 +1,121 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-export default function Distance3DCalculator() {
-  const [point1, setPoint1] = useState({ x: "", y: "", z: "" });
-  const [point2, setPoint2] = useState({ x: "", y: "", z: "" });
-  const [distance, setDistance] = useState(null);
+const ThreeDTriangleCalculator = () => {
+  const [base, setBase] = useState('');
+  const [height, setHeight] = useState('');
+  const [area, setArea] = useState(null);
 
-  const calculateDistance = () => {
-    const dx = point2.x - point1.x;
-    const dy = point2.y - point1.y;
-    const dz = point2.z - point1.z;
-    const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-    setDistance(dist.toFixed(2));
+  const calculateArea = () => {
+    const b = parseFloat(base);
+    const h = parseFloat(height);
+    if (!isNaN(b) && !isNaN(h) && b > 0 && h > 0) {
+      const areaValue = 0.5 * b * h;
+      setArea(areaValue.toFixed(2));
+    } else {
+      setArea(null);
+    }
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>3D Distance Calculator</h2>
-      <div style={styles.inputGroup}>
-        <h4>Point 1:</h4>
-        <input
-          type="number"
-          placeholder="x1"
-          value={point1.x}
-          onChange={(e) => setPoint1({ ...point1, x: parseFloat(e.target.value) })}
-          style={styles.input}
-        />
-        <input
-          type="number"
-          placeholder="y1"
-          value={point1.y}
-          onChange={(e) => setPoint1({ ...point1, y: parseFloat(e.target.value) })}
-          style={styles.input}
-        />
-        <input
-          type="number"
-          placeholder="z1"
-          value={point1.z}
-          onChange={(e) => setPoint1({ ...point1, z: parseFloat(e.target.value) })}
-          style={styles.input}
-        />
-      </div>
+    <div className="triangle-container">
+      <h2>3D Triangle Area Calculator</h2>
+      <input
+        type="number"
+        placeholder="Enter base"
+        value={base}
+        onChange={(e) => setBase(e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Enter height"
+        value={height}
+        onChange={(e) => setHeight(e.target.value)}
+      />
+      <button onClick={calculateArea}>Calculate</button>
 
-      <div style={styles.inputGroup}>
-        <h4>Point 2:</h4>
-        <input
-          type="number"
-          placeholder="x2"
-          value={point2.x}
-          onChange={(e) => setPoint2({ ...point2, x: parseFloat(e.target.value) })}
-          style={styles.input}
-        />
-        <input
-          type="number"
-          placeholder="y2"
-          value={point2.y}
-          onChange={(e) => setPoint2({ ...point2, y: parseFloat(e.target.value) })}
-          style={styles.input}
-        />
-        <input
-          type="number"
-          placeholder="z2"
-          value={point2.z}
-          onChange={(e) => setPoint2({ ...point2, z: parseFloat(e.target.value) })}
-          style={styles.input}
-        />
-      </div>
+      {area && (
+        <div className="result">
+          <p><strong>Area:</strong> {area} square units</p>
+        </div>
+      )}
 
-      <button onClick={calculateDistance} style={styles.button}>
-        Calculate Distance
-      </button>
+      <style>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background: linear-gradient(to right, #00c6ff, #0072ff);
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-      {distance !== null && <p style={styles.result}>Distance: {distance}</p>}
+        .triangle-container {
+          max-width: 420px;
+          margin: 60px auto;
+          padding: 30px;
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.15);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          text-align: center;
+          color: #fff;
+        }
+
+        .triangle-container h2 {
+          margin-bottom: 20px;
+        }
+
+        input {
+          width: 90%;
+          padding: 12px;
+          margin: 12px 0;
+          font-size: 16px;
+          border: none;
+          border-radius: 8px;
+          outline: none;
+        }
+
+        button {
+          padding: 12px 28px;
+          background-color: #1e90ff;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 16px;
+          transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+          background-color: #005fbd;
+          transform: scale(1.05);
+        }
+
+        .result {
+          margin-top: 25px;
+          background: rgba(255, 255, 255, 0.1);
+          padding: 15px;
+          border-radius: 10px;
+          color: #fff;
+        }
+
+        @media (max-width: 500px) {
+          .triangle-container {
+            margin: 20px;
+            padding: 20px;
+          }
+
+          button {
+            width: 100%;
+          }
+
+          input {
+            width: 100%;
+          }
+        }
+      `}</style>
     </div>
   );
-}
-
-const styles = {
-  container: {
-    maxWidth: "500px",
-    margin: "30px auto",
-    padding: "20px",
-    border: "2px solid #ccc",
-    borderRadius: "10px",
-    textAlign: "center",
-    fontFamily: "Arial, sans-serif",
-  },
-  heading: {
-    marginBottom: "20px",
-    fontSize: "24px",
-    color: "#333",
-  },
-  inputGroup: {
-    marginBottom: "15px",
-  },
-  input: {
-    margin: "5px",
-    padding: "8px",
-    width: "70px",
-    fontSize: "16px",
-    borderRadius: "5px",
-    border: "1px solid #888",
-  },
-  button: {
-    padding: "10px 20px",
-    fontSize: "16px",
-    backgroundColor: "#007bff",
-    color: "#fff",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-    marginTop: "10px",
-  },
-  result: {
-    marginTop: "20px",
-    fontSize: "20px",
-    color: "#222",
-    fontWeight: "bold",
-  },
 };
+
+export default ThreeDTriangleCalculator;
